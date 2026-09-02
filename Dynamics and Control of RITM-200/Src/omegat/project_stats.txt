@@ -1,0 +1,14 @@
+01/09/26, 15:59
+Statistiche del progetto
+
+                 	Segmenti	Parole	Caratteri (senza spazi)	Caratteri (con spazi)	#File	
+Totali:          	     477	 10422	                  64489	                74335	    1	
+Restanti:        	     477	 10422	                  64489	                74335	    1	
+Univoci:         	     429	 10400	                  64243	                74089	    1	
+Univoci restanti:	     429	 10400	                  64243	                74089	    1	
+
+
+Statistiche file singoli:
+
+Nome del file	Segmenti totali	Segmenti restanti	Segmenti univoci	Segmenti univoci restanti	Parole totali	Parole restanti	Parole univoche	Parole univoche restanti	Caratteri totali (senza spazi)	Caratteri rimanenti (senza spazi)	Caratteri univoci (senza spazi)	Caratteri univoci rimanenti (senza spazi)	Caratteri totali (con spazi)	Caratteri rimanenti (con spazi)	Caratteri univoci (con spazi)	Caratteri univoci rimanenti (con spazi)	
+main.tex     	            477	              477	             429	                      429	        10422	          10422	          10400	                   10400	                         64489	                            64489	                          64243	                                    64243	                       74335	                          74335	                        74089	                                  74089	
