@@ -3,6 +3,8 @@
 ## Overview
 This is my Bs thesis project and it presents a coupled numerical model developed in Python to analyze the dynamic behavior of the **RITM-200 Small Modular Reactor (SMR)**. The main objective is to simulate and understand how the reactor responds to operational transients and perturbations, highlighting the interdependence of its neutronics, thermal-hydraulics, and thermodynamic systems.
 
+**If you want to know more about the mathematical methods and the final results (and the their verification) visit the reports placed in the docs folder**
+
 ## Modeled Subsystems
 To capture the real-world behavior of the reactor, the model integrates several distinct but interacting physical subsystems:
 
