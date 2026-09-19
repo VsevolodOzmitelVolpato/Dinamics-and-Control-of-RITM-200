@@ -227,16 +227,27 @@ Note the physically-expected spread in response magnitude: a 10% power step move
 
 ---
 
-## My role in this project
+## Contributions
 
-This was a five-person course project. The **steam generator model** — Chapter 4 of the report, `steam_generator/` in this repo — was my primary contribution: the 1D finite-volume, counter-current, cassette-type exchanger described above, along with its steady-state strategy and its integration into the coupled system.
+A five-person project, built collaboratively: rather than splitting into isolated
+modules, we worked across the whole model together — kinetics, core thermal-hydraulics,
+the steam generator, and the coupling layer.
 
-It took more than one pass to get right:
+Two iterations worth recording, since the final code doesn't show them:
 
-- **First version:** explicit Euler integration, with a bisection-based shooting method for the steady state, delivered as an interactive HTML visualisation using Chart.js.
-- **Current version:** unconditionally stable **implicit Euler**, with **Brent's method** replacing bisection for the steady-state search — trading extra bookkeeping (sequential semi-implicit sweeps rather than a direct update) for timesteps orders of magnitude larger.
-
-**A debugging story worth keeping.** An early build of the fully coupled core + SG transient showed an unexplained instability from $t = 0$ — before any perturbation had been applied, which is what made it suspicious rather than merely wrong. The cause turned out to be the warm-up phase: its timestep was too short relative to the secondary side's thermal time constant, so it never actually reached the discrete steady state. The "steady" initial condition handed to the transient solver was still quietly evolving, and the transient inherited that drift. Lengthening the warm-up timestep fixed it — and the triple energy-balance check described above is what made the diagnosis possible.
+- **Explicit → implicit.** The steam generator first ran on explicit Euler with a
+  bisection-based shooting method for the steady state. It was replaced with
+  unconditionally stable implicit Euler and Brent's method — trading extra bookkeeping
+  (sequential semi-implicit sweeps instead of a direct update) for timesteps orders of
+  magnitude larger.
+- **A debugging story.** An early build of the coupled core + SG transient showed an
+  unexplained instability from t = 0 — before any perturbation had been applied, which
+  is what made it suspicious rather than merely wrong. The warm-up phase turned out to
+  be the culprit: its timestep was too short relative to the secondary side's thermal
+  time constant, so it never reached the discrete steady state. The "steady" initial
+  condition handed to the transient solver was still quietly evolving. Lengthening the
+  warm-up timestep fixed it — and the triple energy-balance check above is what made
+  the diagnosis possible.
 
 ---
 
@@ -344,54 +355,27 @@ Stated deliberately, as in the original report:
 - **Phenomenological pressure model.** $\tau_p$ is assumed rather than derived. In the standalone model this is a first-order approximation; in the fully coupled system the underlying feedback (via $T_{sat}(P_s)$) is captured more rigorously.
 - **Saturated-fluid assumption** in the pressure balance introduces error only in the subcooled inlet zone, which occupies roughly 15–20% of the length.
 
-## Future work
-
-- Simultaneous multi-input transients (rod motion *and* a flow ramp together) — partly explored, worth developing into a systematic study
-- Accident-condition scenarios beyond operational transients
-- 1D axial neutronics to capture flux shape and power peaking
-- Sensitivity analysis on the feedback coefficients and on $\tau_p$
-- Validation against published RITM-200 transient data where available
-
----
-
 ## Repository structure
-
-> The layout below reflects the model's logical structure. Rename to match your actual files before publishing.
-
 ```
 .
-├── core/
-│   ├── kinetics.py             # point kinetics + 6 precursor groups
-│   ├── thermal_hydraulics.py   # 3-node fuel / cladding / coolant
-│   └── steady_state.py         # core steady state (fsolve)
-├── steam_generator/
-│   ├── sg_model.py             # finite-volume SG, implicit Euler
-│   ├── correlations.py         # Dittus-Boelter, Weisman, two-phase
-│   ├── shooting.py             # continuous steady state (shooting + Brent)
-│   └── warmup.py               # implicit warm-up to discrete steady state
-├── pressure/
-│   └── pressure_model.py       # secondary pressure dynamics
-├── coupling/
-│   └── full_system.py          # coupled core <-> SG integration
+├── README.MD             
+├── main_ENG.py                 # main file in English  
+├── main_ITA.py                 # main file in Italian
+├── Src/
+│   ├── Steam_Generator.py      # finite-volume SG, implicit Euler
+│   ├── Thermohydraulics.py     # 3-node fuel / cladding / coolant
+│   ├── Neutronics.py           # Neutronics kinetics
+│   └── Thermohyd+neutronics.py # the Neutronics and Thermohydraulics files combined togheter      
 ├── assets/                     # figures used in this README
-├── results/                    # transient outputs and plots
-├── docs/
-│   └── report.pdf              # full technical report (Italian)
-├── requirements.txt
-└── main.py
+├── Docs/
+│   ├── Report(English).pdf     # full technical report (English)
+│   └── Report(Italian).pdf     # full technical report (Italian)
+
 ```
 
 ## Getting started
 
-```bash
-git clone https://github.com/<your-username>/ritm200-dynamics.git
-cd ritm200-dynamics
-pip install -r requirements.txt
-python main.py
-```
-
-`requirements.txt`:
-
+You have to install the following libraries on python
 ```
 numpy
 scipy
@@ -438,13 +422,13 @@ Developed for the Nuclear Engineering Laboratory (*Laboratorio di Ingegneria Nuc
 - Ettore Carlotti
 - Andrea Ferroni
 - Gabriele Melchionda
-- **Vsevolod Ozmitel Volpato** — steam generator model (Ch. 4), *this repository*
+- **Vsevolod Ozmitel Volpato**
 - Giuseppe Praino
 
 ## License
 
-No license is set yet. If you want others to be able to reuse this code, consider adding one — MIT is a common, permissive choice for portfolio and academic repositories.
+No license is set yet, but for information contact Politecnico di Milano. If you want others to be able to reuse this code, consider adding one — MIT is a common, permissive choice for portfolio and academic repositories.
 
 ---
 
-**Contact:** add your LinkedIn / email here before publishing.
+**Contact:** www.linkedin.com/in/ozmitelvsevolod
