@@ -40,7 +40,7 @@
   - [5. Full-system coupling](#5-full-system-coupling)
 - [Numerical methods](#numerical-methods)
 - [Verification](#verification)
-- [My role in this project](#my-role-in-this-project)
+- [My role in this project](#Contributions)
 - [Results](#results)
   - [A. Load-following](#a-load-following--10-secondary-mass-flow)
   - [B. Control-rod insertion](#b-upstream-power-control--3-cm-control-rod-insertion)
@@ -71,6 +71,8 @@ plus a first-order **secondary-side pressure model**, all coupled through the pr
 Two realistic operational transients are simulated and analysed end to end: a **secondary flow-rate ramp** (demonstrating PWR/SMR *load-following*) and a **control-rod insertion** (demonstrating *upstream* power control). Both show a perturbation in one sub-system propagating correctly through the entire coupled model to a new, stable equilibrium.
 
 Beyond the nuclear domain, this is a study in coupling stiff solvers across widely separated timescales, choosing implicit schemes where stability governs cost, and verifying results against independent physical balances rather than trusting a single number.
+
+For more details about the project, please see the **Report files** in the Docs folder.
 
 ## Why RITM-200
 
